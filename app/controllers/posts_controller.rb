@@ -23,15 +23,10 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
 
-    respond_to do |format|
-      if @post.save
-        format.html { redirect_to post_url(@post), notice: "投稿しました。" }
-        format.json { render :show, status: :created, location: @post }
-        
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @post.errors, status: :unprocessable_entity }
-      end
+    if @post.save
+      redirect_to @post, notice: '投稿が作成されました。'
+    else
+      render :new
     end
   end
 
